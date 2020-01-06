@@ -2,7 +2,7 @@
   "name": "riot-api-json-ts-wrapper",
   "version": "0.0.1",
   "description": "riot-api type wrapper",
-  "main": "test.js",
+  "main": "index.js",
   "dependencies": {
     "axios": "^0.19.0"
   },
