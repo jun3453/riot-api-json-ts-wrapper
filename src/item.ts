@@ -4,7 +4,7 @@ export type items = {
     type: string;
     format: string;
     version: string;
-    data: {[name: string]: item}[];
+    data: {[name: string]: item};
     groups: groups[]; 
     tree: tree[];
 }

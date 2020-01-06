@@ -4,7 +4,7 @@ export type champions = {
     type: string;
     format: string;
     version: string;
-    data: {[name: string]: champion}[];
+    data: {[name: string]: champion};
 }
 
 export type champion = {
