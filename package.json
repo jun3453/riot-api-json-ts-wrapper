@@ -2,13 +2,19 @@
   "name": "riot-api-json-ts-wrapper",
   "version": "0.0.1",
   "description": "riot-api type wrapper",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "axios": "^0.19.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^3.7.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
