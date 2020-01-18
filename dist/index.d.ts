@@ -1,1 +1,2 @@
-export * from "./riotApi";
+import * as DataDragon from "./DataDragon/dataDragon";
+export { DataDragon };
