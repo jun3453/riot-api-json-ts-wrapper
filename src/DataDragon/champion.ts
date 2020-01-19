@@ -3,10 +3,13 @@ import axios from 'axios';
 import { version } from "./version";
 import { language } from "./language";
 
-const VRESION_REPLACE = "####";
+const VERSION_REPLACE = "####";
 const LANGUAGE_REPLACE = "$$$$";
-const DATA_DRAGON_CHAMPION_URL = "http://ddragon.leagueoflegends.com/cdn/" + VRESION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion.json";
-const DATA_DRAGON_CHAMPION_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/" + VRESION_REPLACE + "/img/champion/";
+const CHAMPIOIN_REPLACE = "~~~~";
+const DATA_DRAGON_BASE_URL = "http://ddragon.leagueoflegends.com/cdn/";
+const DATA_DRAGON_CHAMPION_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion.json";
+const DATA_DRAGON_CHAMPION_IMAGE_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/img/champion/";
+const DATA_DRAGON_CHAMPION_DETAIL_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion/" + CHAMPIOIN_REPLACE + ".json";
 
 export const getChampions = async (version: version, language: language): Promise<champions> => {
     const url = createChampionsUrl(version, language);
@@ -15,12 +18,23 @@ export const getChampions = async (version: version, language: language): Promis
     return champions;
 }
 
+export const getChampionDetail = async (champion: champion, version: version, language: language): Promise<championDetail> => {
+    const url = createChampionDetailUrl(champion, version, language);
+    const result = await axios.get(url);
+    const detail: championDetail = result.data;
+    return detail;
+}
+
 const createChampionsUrl = (version: version, language: language): string => {
-    return DATA_DRAGON_CHAMPION_URL.replace(VRESION_REPLACE, version).replace(LANGUAGE_REPLACE, language)
+    return DATA_DRAGON_CHAMPION_URL.replace(VERSION_REPLACE, version).replace(LANGUAGE_REPLACE, language);
+}
+
+const createChampionDetailUrl = (champion: champion, version: version, language: language): string => {
+    return DATA_DRAGON_CHAMPION_DETAIL_URL.replace(VERSION_REPLACE, version).replace(LANGUAGE_REPLACE, language).replace(CHAMPIOIN_REPLACE, champion.name);
 }
 
 export const createChampionImageUrl = (champion: champion, version: version): string => {
-    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version) + champion.image.full;
+    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VERSION_REPLACE, version) + champion.image.full;
 }
 
 export type champions = {
@@ -71,4 +85,108 @@ type stats = {
     attackdamageperlevel: number,
     attackspeed: number,
     attackspeedperlevel: number,
+}
+
+export type championDetail = {
+    type: string;
+    format: string;
+    version: string;
+    data: { [name: string]: championDetailData };
+}
+
+export type championDetailData = {
+    id: string,
+    key: number,
+    name: string,
+    title: string,
+    image: image,
+    skins: skins,
+    lore: string,
+    blurb: string,
+    allytips: string[],
+    enemytips: string[],
+    tags: string[],
+    parttype: string,
+    info: info,
+    stats: stats,
+    spells: spell[],
+    passive: passive,
+
+}
+
+type skins = {
+    id: string,
+    num: number,
+    name: string,
+    chromas: boolean,
+}
+
+type spell = {
+    id: string,
+    name: string,
+    description: string,
+    tooltip: string,
+    leveltip: leveltip,
+    maxrank: number,
+    cooldown: number,
+    cooldownBurn: string,
+    cost: number[],
+    costBurn: string,
+    datavalues: any, // TODO type
+    effect: any, // TODO type
+    effectBurn: any, // TODO type
+    vars: any, // TODO type
+    costType: string,
+    maxammo: string,
+    range: number[],
+    rangeBurn: string,
+    image: image,
+    resource: string,
+    recommended: recommended[],
+
+}
+
+type leveltip = {
+    label: string[],
+    effect: string[],
+}
+
+type passive = {
+    name: string,
+    description: string,
+    image: image
+}
+
+type recommended = {
+    champion: string,
+    title: string,
+    map: string,
+    mode: string,
+    type: string,
+    customTag: string,
+    sortrank: number,
+    extensionPage: boolean,
+    useObviosCheckmark: boolean,
+    customPanel: any, // TODO type
+    blocks: block[],
+}
+
+type block = {
+    type: string,
+    recMath: boolean,
+    recSteps: boolean,
+    minSummonerLevel: number,
+    maxSummonerLevel: number,
+    showIfSummonerSpell: string,
+    hideIfSummonerSpell: string,
+    appendAfterSection: string,
+    visibleWithAllOf: string[],
+    hiddenWithAnyOf: string[],
+    items: blockItem[],
+}
+
+type blockItem = {
+    id: string,
+    count: number,
+    hideCount: boolean,
 }

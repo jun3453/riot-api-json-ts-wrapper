@@ -1,5 +1,6 @@
 import { image } from "./global";
 export declare const getChampions: (version: string, language: string) => Promise<champions>;
+export declare const getChampionDetail: (champion: champion, version: string, language: string) => Promise<championDetail>;
 export declare const createChampionImageUrl: (champion: champion, version: string) => string;
 export declare type champions = {
     type: string;
@@ -48,5 +49,100 @@ declare type stats = {
     attackdamageperlevel: number;
     attackspeed: number;
     attackspeedperlevel: number;
+};
+export declare type championDetail = {
+    type: string;
+    format: string;
+    version: string;
+    data: {
+        [name: string]: championDetailData;
+    };
+};
+export declare type championDetailData = {
+    id: string;
+    key: number;
+    name: string;
+    title: string;
+    image: image;
+    skins: skins;
+    lore: string;
+    blurb: string;
+    allytips: string[];
+    enemytips: string[];
+    tags: string[];
+    parttype: string;
+    info: info;
+    stats: stats;
+    spells: spell[];
+    passive: passive;
+};
+declare type skins = {
+    id: string;
+    num: number;
+    name: string;
+    chromas: boolean;
+};
+declare type spell = {
+    id: string;
+    name: string;
+    description: string;
+    tooltip: string;
+    leveltip: leveltip;
+    maxrank: number;
+    cooldown: number;
+    cooldownBurn: string;
+    cost: number[];
+    costBurn: string;
+    datavalues: any;
+    effect: any;
+    effectBurn: any;
+    vars: any;
+    costType: string;
+    maxammo: string;
+    range: number[];
+    rangeBurn: string;
+    image: image;
+    resource: string;
+    recommended: recommended[];
+};
+declare type leveltip = {
+    label: string[];
+    effect: string[];
+};
+declare type passive = {
+    name: string;
+    description: string;
+    image: image;
+};
+declare type recommended = {
+    champion: string;
+    title: string;
+    map: string;
+    mode: string;
+    type: string;
+    customTag: string;
+    sortrank: number;
+    extensionPage: boolean;
+    useObviosCheckmark: boolean;
+    customPanel: any;
+    blocks: block[];
+};
+declare type block = {
+    type: string;
+    recMath: boolean;
+    recSteps: boolean;
+    minSummonerLevel: number;
+    maxSummonerLevel: number;
+    showIfSummonerSpell: string;
+    hideIfSummonerSpell: string;
+    appendAfterSection: string;
+    visibleWithAllOf: string[];
+    hiddenWithAnyOf: string[];
+    items: blockItem[];
+};
+declare type blockItem = {
+    id: string;
+    count: number;
+    hideCount: boolean;
 };
 export {};
