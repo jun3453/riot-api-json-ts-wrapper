@@ -2,6 +2,7 @@ import { image } from "./global";
 export declare const getChampions: (version: string, language: string) => Promise<champions>;
 export declare const getChampionDetail: (champion: champion, version: string, language: string) => Promise<championDetail>;
 export declare const createChampionImageUrl: (champion: champion, version: string) => string;
+export declare const createChampionSplashArtUrls: (detail: championDetail) => string[];
 export declare type champions = {
     type: string;
     format: string;
@@ -64,7 +65,7 @@ export declare type championDetailData = {
     name: string;
     title: string;
     image: image;
-    skins: skins;
+    skins: skin[];
     lore: string;
     blurb: string;
     allytips: string[];
@@ -76,7 +77,7 @@ export declare type championDetailData = {
     spells: spell[];
     passive: passive;
 };
-declare type skins = {
+declare type skin = {
     id: string;
     num: number;
     name: string;

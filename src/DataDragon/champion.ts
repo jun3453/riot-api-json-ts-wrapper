@@ -6,10 +6,13 @@ import { language } from "./language";
 const VERSION_REPLACE = "####";
 const LANGUAGE_REPLACE = "$$$$";
 const CHAMPIOIN_REPLACE = "~~~~";
+const NUMBER_REPLACE = "----";
+
 const DATA_DRAGON_BASE_URL = "http://ddragon.leagueoflegends.com/cdn/";
 const DATA_DRAGON_CHAMPION_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion.json";
-const DATA_DRAGON_CHAMPION_IMAGE_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/img/champion/";
+const DATA_DRAGON_CHAMPION_IMAGE_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/img/champion/" + CHAMPIOIN_REPLACE;
 const DATA_DRAGON_CHAMPION_DETAIL_URL = DATA_DRAGON_BASE_URL + VERSION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion/" + CHAMPIOIN_REPLACE + ".json";
+const DATA_DRAGON_CHAMPION_SPLASH_ART_URL = DATA_DRAGON_BASE_URL + "/img/champion/splash/" + CHAMPIOIN_REPLACE + "_" + NUMBER_REPLACE + ".jpg"
 
 export const getChampions = async (version: version, language: language): Promise<champions> => {
     const url = createChampionsUrl(version, language);
@@ -30,11 +33,21 @@ const createChampionsUrl = (version: version, language: language): string => {
 }
 
 const createChampionDetailUrl = (champion: champion, version: version, language: language): string => {
-    return DATA_DRAGON_CHAMPION_DETAIL_URL.replace(VERSION_REPLACE, version).replace(LANGUAGE_REPLACE, language).replace(CHAMPIOIN_REPLACE, champion.name);
+    return DATA_DRAGON_CHAMPION_DETAIL_URL.replace(VERSION_REPLACE, version).replace(LANGUAGE_REPLACE, language).replace(CHAMPIOIN_REPLACE, champion.id);
 }
 
 export const createChampionImageUrl = (champion: champion, version: version): string => {
-    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VERSION_REPLACE, version) + champion.image.full;
+    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VERSION_REPLACE, version).replace(CHAMPIOIN_REPLACE, champion.image.full);
+}
+
+export const createChampionSplashArtUrls = (detail: championDetail): string[] => {
+    const data: championDetailData = Object.keys(detail.data).map((key: string) => {
+        const id: string = detail.data[key].id;
+        return detail.data[id];
+    })[0];
+    return data.skins.map((s: skin) => {
+        return DATA_DRAGON_CHAMPION_SPLASH_ART_URL.replace(CHAMPIOIN_REPLACE, data.id).replace(NUMBER_REPLACE, s.num.toString());
+    })
 }
 
 export type champions = {
@@ -100,7 +113,7 @@ export type championDetailData = {
     name: string,
     title: string,
     image: image,
-    skins: skins,
+    skins: skin[],
     lore: string,
     blurb: string,
     allytips: string[],
@@ -114,7 +127,7 @@ export type championDetailData = {
 
 }
 
-type skins = {
+type skin = {
     id: string,
     num: number,
     name: string,
