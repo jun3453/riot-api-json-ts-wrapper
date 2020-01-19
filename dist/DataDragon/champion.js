@@ -15,6 +15,6 @@ const createChampionsUrl = (version, language) => {
     return DATA_DRAGON_CHAMPION_URL.replace(VRESION_REPLACE, version).replace(LANGUAGE_REPLACE, language);
 };
 exports.createChampionImageUrl = (champion, version) => {
-    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version);
+    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version) + champion.image.full;
 };
 //# sourceMappingURL=champion.js.map

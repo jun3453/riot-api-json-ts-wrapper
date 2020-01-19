@@ -20,7 +20,7 @@ const createChampionsUrl = (version: version, language: language): string => {
 }
 
 export const createChampionImageUrl = (champion: champion, version: version): string => {
-    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version)
+    return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version) + champion.image.full;
 }
 
 export type champions = {
