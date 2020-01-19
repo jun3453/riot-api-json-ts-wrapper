@@ -1,5 +1,5 @@
 import { image } from "./global";
-export declare const getChampions: (version: string) => Promise<champions>;
+export declare const getChampions: (version: string, language: string) => Promise<champions>;
 export declare const createChampionImageUrl: (champion: champion, version: string) => string;
 export declare type champions = {
     type: string;

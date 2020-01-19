@@ -1,22 +1,25 @@
 import { image } from "./global";
 import axios from 'axios';
+import { version } from "./version";
+import { language } from "./language";
 
 const VRESION_REPLACE = "####";
-const DATA_DRAGON_CHAMPION_URL = "http://ddragon.leagueoflegends.com/cdn/" + VRESION_REPLACE + "/data/en_US/champion.json";
+const LANGUAGE_REPLACE = "$$$$";
+const DATA_DRAGON_CHAMPION_URL = "http://ddragon.leagueoflegends.com/cdn/" + VRESION_REPLACE + "/data/" + LANGUAGE_REPLACE + "/champion.json";
 const DATA_DRAGON_CHAMPION_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/" + VRESION_REPLACE + "/img/champion/";
 
-export const getChampions = async (version: string): Promise<champions> => {
-    const url = createChampionsUrl(version);
+export const getChampions = async (version: version, language: language): Promise<champions> => {
+    const url = createChampionsUrl(version, language);
     const result = await axios.get(url);
     const champions: champions = result.data;
     return champions;
 }
 
-const createChampionsUrl = (version: string): string => {
-    return DATA_DRAGON_CHAMPION_URL.replace(VRESION_REPLACE, version)
+const createChampionsUrl = (version: version, language: language): string => {
+    return DATA_DRAGON_CHAMPION_URL.replace(VRESION_REPLACE, version).replace(LANGUAGE_REPLACE, language)
 }
 
-export const createChampionImageUrl = (champion: champion, version: string): string => {
+export const createChampionImageUrl = (champion: champion, version: version): string => {
     return DATA_DRAGON_CHAMPION_IMAGE_URL.replace(VRESION_REPLACE, version)
 }
 

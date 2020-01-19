@@ -1,0 +1,1 @@
+{"version":3,"file":"version.js","sourceRoot":"","sources":["../../src/DataDragon/version.ts"],"names":[],"mappings":";;AAAA,iCAA0B;AAE1B,MAAM,YAAY,GAAG,uDAAuD,CAAC;AAEhE,QAAA,WAAW,GAAG,KAAK,IAAwB,EAAE;IACtD,MAAM,MAAM,GAAG,MAAM,eAAK,CAAC,GAAG,CAAC,YAAY,CAAC,CAAC;IAC7C,MAAM,QAAQ,GAAc,MAAM,CAAC,IAAI,CAAC;IACxC,OAAO,QAAQ,CAAC;AACpB,CAAC,CAAA"}
